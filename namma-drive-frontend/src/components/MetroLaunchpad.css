@@ -1,0 +1,72 @@
+.metro-launchpad {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metro-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0;
+}
+
+.metro-scroll {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: thin;
+  scrollbar-color: #e5e7eb transparent;
+}
+
+.metro-scroll::-webkit-scrollbar {
+  height: 3px;
+}
+.metro-scroll::-webkit-scrollbar-track { background: transparent; }
+.metro-scroll::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 10px; }
+
+.metro-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 14px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  background: #ffffff;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: #6b7280;
+}
+
+.metro-card:hover {
+  border-color: #ce1126;
+  color: #ce1126;
+  background: #fef2f2;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(206, 17, 38, 0.15);
+}
+
+.metro-card.active {
+  border-color: #ce1126;
+  background: linear-gradient(135deg, #ce1126 0%, #ce1126 55%, #f9d616 160%);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(206, 17, 38, 0.35);
+  transform: translateY(-2px);
+}
+
+.metro-emoji {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.metro-name {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}

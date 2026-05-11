@@ -1,22 +1,24 @@
+/* ── Layout ── */
 .map-page {
   display: flex;
   width: 100%;
   height: 100vh;
+  overflow: hidden;
 }
 
 /* ── Sidebar ── */
 .mp-sidebar {
-  width: 300px;
-  min-width: 300px;
+  width: 340px;
+  min-width: 340px;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #e5e7eb;
   background: #ffffff;
+  border-right: 1px solid #e5e7eb;
   z-index: 500;
   overflow: hidden;
 }
 
-.mp-sidebar-top {
+.mp-sidebar-header {
   padding: 1.25rem;
   border-bottom: 1px solid #f3f4f6;
   flex-shrink: 0;
@@ -26,31 +28,58 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .mp-logo-dot {
-  width: 8px; height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: #ce1126;
   display: block;
 }
 
 .mp-logo-text {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 700;
   color: #111827;
 }
 
+.mp-sidebar-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.25rem 0;
+}
+
+/* ── Sidebar sections ── */
+.mp-section {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.mp-section:last-child {
+  border-bottom: none;
+}
+
+.mp-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+
+/* ── Field groups ── */
 .mp-field-group {
-  margin-bottom: 4px;
+  margin-bottom: 0.6rem;
 }
 
 .mp-field-label {
   font-size: 11px;
   color: #9ca3af;
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 
 .mp-field {
@@ -65,7 +94,7 @@
 }
 
 .mp-field:focus-within {
-  border-color: #6366f1;
+  border-color: #ce1126;
 }
 
 .mp-field select {
@@ -79,7 +108,8 @@
 }
 
 .mp-dot {
-  width: 8px; height: 8px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   flex-shrink: 0;
   display: block;
@@ -88,23 +118,17 @@
 .mp-dot.green { background: #22c55e; }
 .mp-dot.red   { background: #ef4444; }
 
-.mp-connector {
-  width: 1px;
-  height: 10px;
-  background: #e5e7eb;
-  margin: 4px 0 4px 16px;
-}
-
+/* ── Calculate button ── */
 .mp-calc-btn {
   width: 100%;
-  margin-top: 12px;
+  margin-top: 10px;
   background: #1a1040;
   color: #ffffff;
   border: none;
   border-radius: 8px;
-  padding: 11px;
+  padding: 12px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: opacity 0.2s, transform 0.15s;
 }
@@ -120,43 +144,53 @@
 }
 
 .mp-error {
-  margin-top: 10px;
+  margin-top: 8px;
   font-size: 12px;
   color: #dc2626;
   background: #fef2f2;
-  padding: 8px 10px;
+  padding: 7px 10px;
   border-radius: 6px;
   border: 1px solid #fecaca;
 }
 
-/* ── Sidebar body ── */
-.mp-sidebar-body {
-  flex: 1;
-  overflow-y: auto;
-  padding: 1rem 1.25rem;
+.mp-auth-hint {
+  margin-top: 6px;
+  font-size: 11px;
+  color: #9ca3af;
+  text-align: center;
 }
 
+/* ── Route card ── */
 .mp-route-card {
   background: #f9fafb;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
   padding: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .mp-stat-row {
   display: flex;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: wrap;
   margin-bottom: 12px;
 }
 
 .mp-stat-pill {
-  font-size: 12px;
+  font-size: 11px;
   color: #374151;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 20px;
-  padding: 4px 11px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+
+.mp-stat-pill.mode {
+  background: #ce1126;
+  color: #ffffff;
+  border-color: #ce1126;
+  font-weight: 600;
 }
 
 .mp-name-input {
@@ -169,10 +203,11 @@
   outline: none;
   background: #fff;
   transition: border-color 0.2s;
+  box-sizing: border-box;
 }
 
 .mp-name-input:focus {
-  border-color: #6366f1;
+  border-color: #ce1126;
 }
 
 .mp-save-btn {
@@ -183,12 +218,12 @@
   border-radius: 6px;
   padding: 10px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
 }
 
-.mp-save-btn:hover {
+.mp-save-btn:hover:not(.saved) {
   background: #15803d;
 }
 
@@ -198,17 +233,8 @@
 }
 
 /* ── Fuel stops ── */
-.mp-section-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: #9ca3af;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 0.6rem;
-}
-
 .mp-fuel-section {
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
 }
 
 .mp-fuel-item {
@@ -216,7 +242,7 @@
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 9px 0;
+  padding: 8px 0;
   border-bottom: 1px solid #f3f4f6;
 }
 
@@ -228,12 +254,13 @@
   font-size: 12px;
   font-weight: 500;
   color: #111827;
-  margin-bottom: 2px;
+  margin: 0 0 2px 0;
 }
 
 .mp-fuel-meta {
   font-size: 11px;
   color: #9ca3af;
+  margin: 0;
 }
 
 .mp-fuel-dist {
@@ -271,9 +298,9 @@
 }
 
 .mp-nav-btn.active {
-  color: #1a1040;
-  font-weight: 500;
-  background: #f9fafb;
+  color: #ce1126;
+  font-weight: 700;
+  background: #fef2f2;
 }
 
 .mp-nav-btn:hover:not(.active) {
@@ -281,9 +308,48 @@
   color: #374151;
 }
 
-/* ── Leaflet map ── */
-.mp-leaflet {
+/* ── Map ── */
+.mp-map-container {
   flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.mp-map-topbar {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  /* Above Leaflet panes/tiles so “Where to?” stays clickable */
+  z-index: 5000;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.mp-map-topbar > * {
+  pointer-events: auto;
+}
+
+.mp-map-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  padding: 10px 12px;
+  max-width: 560px;
+}
+
+.mp-map-where {
+  min-width: min(420px, calc(100vw - 28px));
+}
+
+.mp-leaflet {
+  width: 100%;
   height: 100%;
 }
 
@@ -292,25 +358,80 @@
   height: 100%;
 }
 
-.mp-route-glow {
-  filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.95))
-          drop-shadow(0 0 18px rgba(56, 189, 248, 0.75))
-          drop-shadow(0 0 28px rgba(59, 130, 246, 0.55));
-  animation: mpGlowPulse 1.8s ease-in-out infinite;
+/* ── POI popup ── */
+.poi-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 160px;
 }
 
-.mp-route-core {
-  filter: drop-shadow(0 0 3px rgba(37, 99, 235, 0.9));
+.poi-popup strong {
+  font-size: 13px;
+  color: #111827;
 }
 
-@keyframes mpGlowPulse {
-  0% {
-    opacity: 0.35;
+.poi-popup p {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.popup-btn {
+  margin-top: 6px;
+  background: #ce1126;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.popup-btn:hover {
+  opacity: 0.85;
+}
+
+/* ── Globe fallback (for LandingPage Suspense) ── */
+.globe-fallback {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(206,17,38,0.15) 0%, transparent 70%);
+}
+
+/* ── Mobile Responsive ── */
+@media (max-width: 768px) {
+  .map-page {
+    flex-direction: column-reverse;
   }
-  50% {
-    opacity: 0.6;
+
+  .mp-sidebar {
+    width: 100%;
+    min-width: 100%;
+    height: 50vh;
+    border-right: none;
+    border-top: 2px solid #e5e7eb;
   }
-  100% {
-    opacity: 0.35;
+
+  .mp-map-container {
+    height: 50vh;
+  }
+
+  .mp-map-topbar {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mp-map-card {
+    max-width: none;
+  }
+
+  .mp-map-where {
+    min-width: auto;
   }
 }

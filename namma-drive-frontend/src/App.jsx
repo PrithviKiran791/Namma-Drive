@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useState, Suspense, lazy } from 'react';
 import LandingPage from './components/LandingPage';
-import MapPage from './styles/MapPage';
-import History from './components/History';
+import AuthSync from './components/AuthSync';
 import './App.css';
+
+const MapPage = lazy(() => import('./styles/MapPage'));
+const History = lazy(() => import('./components/History'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
 
 export default function App() {
   const [page, setPage] = useState('landing');
@@ -15,17 +18,21 @@ export default function App() {
 
   return (
     <div className="app">
-      {page === 'landing' && <LandingPage onNavigate={setPage} />}
-      {page === 'map' && (
-        <MapPage
-          loadedRoute={loadedRoute}
-          onNavigate={setPage}
-          onClearRoute={() => setLoadedRoute(null)}
-        />
-      )}
-      {page === 'history' && (
-        <History onLoadRoute={handleLoadRoute} onNavigate={setPage} />
-      )}
+      <AuthSync />
+      <Suspense fallback={<div className="loading-screen">Loading...</div>}>
+        {page === 'landing' && <LandingPage onNavigate={setPage} />}
+        {page === 'login' && <LoginPage onNavigate={setPage} />}
+        {page === 'map' && (
+          <MapPage
+            loadedRoute={loadedRoute}
+            onNavigate={setPage}
+            onClearRoute={() => setLoadedRoute(null)}
+          />
+        )}
+        {page === 'history' && (
+          <History onLoadRoute={handleLoadRoute} onNavigate={setPage} />
+        )}
+      </Suspense>
     </div>
   );
 }
