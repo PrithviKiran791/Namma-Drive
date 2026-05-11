@@ -1,0 +1,34 @@
+.uab-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 36px;
+}
+
+.uab-skeleton {
+  width: 80px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f3f4f6;
+}
+
+.uab-login {
+  border: 1px solid #e5e7eb;
+  background: #111827;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.uab-login:hover {
+  opacity: 0.9;
+}
+
+.uab-avatar {
+  width: 32px !important;
+  height: 32px !important;
+}

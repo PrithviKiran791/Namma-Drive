@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { routeAPI } from '../api';
+import { weatherEmoji } from '../services/weather';
 import '../styles/History.css';
+
+const MODE_ICON = { car: '🚗', bike: '🚴', transit: '🚌' };
 
 export default function History({ onLoadRoute, onNavigate }) {
   const [routes,  setRoutes]  = useState([]);
@@ -22,7 +25,9 @@ export default function History({ onLoadRoute, onNavigate }) {
 
   useEffect(() => { fetchRoutes(); }, []);
 
-  const deleteRoute = async (id) => {
+  const deleteRoute = async (id, e) => {
+    e.stopPropagation();
+    if (!window.confirm('Delete this route?')) return;
     try {
       await routeAPI.delete(id);
       setRoutes(prev => prev.filter(r => r._id !== id));
@@ -31,10 +36,11 @@ export default function History({ onLoadRoute, onNavigate }) {
     }
   };
 
-  // Derive stats from the routes array
+  // Fix: operator precedence bug — wrap parseFloat in parentheses
   const totalKm = routes
-    .reduce((sum, r) => sum + parseFloat(r.distance) || 0, 0)
+    .reduce((sum, r) => sum + (parseFloat(r.distance) || 0), 0)
     .toFixed(0);
+
   const totalFuelStops = routes
     .reduce((sum, r) => sum + (r.fuelStopsOnRoute?.length || 0), 0);
 
@@ -47,19 +53,9 @@ export default function History({ onLoadRoute, onNavigate }) {
           <span className="hst-logo">Namma Drive</span>
         </div>
         <div className="hst-nav">
-          <span
-            className="hst-nav-link"
-            onClick={() => onNavigate('map')}
-          >
-            Map
-          </span>
+          <span className="hst-nav-link" onClick={() => onNavigate('map')}>Map</span>
           <span className="hst-nav-link active">History</span>
-          <span
-            className="hst-nav-link"
-            onClick={() => onNavigate('landing')}
-          >
-            Home
-          </span>
+          <span className="hst-nav-link" onClick={() => onNavigate('landing')}>Home</span>
         </div>
       </div>
 
@@ -76,7 +72,7 @@ export default function History({ onLoadRoute, onNavigate }) {
             <p className="hst-stat-val">{totalKm}</p>
           </div>
           <div className="hst-stat-card">
-            <p className="hst-stat-label">Fuel stops found</p>
+            <p className="hst-stat-label">Fuel stops</p>
             <p className="hst-stat-val">{totalFuelStops}</p>
           </div>
         </div>
@@ -84,14 +80,20 @@ export default function History({ onLoadRoute, onNavigate }) {
         <p className="hst-section-label">Saved drives</p>
 
         {loading && <p className="hst-loading">Loading your routes...</p>}
-        {error   && <p className="hst-error">{error}</p>}
 
-        {!loading && routes.length === 0 && !error && (
+        {error && (
+          <div className="hst-error-box">
+            <p>{error}</p>
+            <button className="hst-retry-btn" onClick={fetchRoutes}>Retry</button>
+          </div>
+        )}
+
+        {!loading && !error && routes.length === 0 && (
           <p className="hst-empty">
             No routes saved yet.{' '}
             <span
               onClick={() => onNavigate('map')}
-              style={{ color: '#1a1040', cursor: 'pointer', textDecoration: 'underline' }}
+              style={{ color: '#ce1126', cursor: 'pointer', textDecoration: 'underline' }}
             >
               Plan one now →
             </span>
@@ -100,7 +102,9 @@ export default function History({ onLoadRoute, onNavigate }) {
 
         {routes.map(route => (
           <div key={route._id} className="hst-card">
-            <div className="hst-card-icon">🗺</div>
+            <div className="hst-card-icon">
+              {MODE_ICON[route.transportMode] || '🗺'}
+            </div>
 
             <div className="hst-card-info">
               <p className="hst-card-title">{route.title}</p>
@@ -110,6 +114,9 @@ export default function History({ onLoadRoute, onNavigate }) {
                   month: 'short',
                   year:  'numeric',
                 })}
+                {route.origin?.name && route.destination?.name && (
+                  <> · {route.origin.name} → {route.destination.name}</>
+                )}
               </p>
               <div className="hst-pill-row">
                 {route.distance && (
@@ -123,7 +130,21 @@ export default function History({ onLoadRoute, onNavigate }) {
                     ⛽ {route.fuelStopsOnRoute.length} fuel stops
                   </span>
                 )}
+                {route.transportMode && (
+                  <span className="hst-pill mode">
+                    {MODE_ICON[route.transportMode]} {route.transportMode}
+                  </span>
+                )}
               </div>
+              {/* Weather snapshot at time of save */}
+              {route.weatherAtSave && (
+                <div className="hst-weather-snap">
+                  <span>{weatherEmoji(route.weatherAtSave.main)}</span>
+                  <span className="hst-weather-temp">{route.weatherAtSave.temp}°C</span>
+                  <span className="hst-weather-desc">{route.weatherAtSave.description}</span>
+                  <span className="hst-weather-label">when saved</span>
+                </div>
+              )}
             </div>
 
             <div className="hst-actions">
@@ -135,7 +156,7 @@ export default function History({ onLoadRoute, onNavigate }) {
               </button>
               <button
                 className="hst-btn del"
-                onClick={() => deleteRoute(route._id)}
+                onClick={(e) => deleteRoute(route._id, e)}
               >
                 Delete
               </button>

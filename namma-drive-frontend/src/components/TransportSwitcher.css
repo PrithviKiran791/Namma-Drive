@@ -1,0 +1,37 @@
+.transport-switcher {
+  display: flex;
+  background: #f3f4f6;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.mode-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #6b7280;
+}
+
+.mode-btn.active {
+  background: #ffffff;
+  color: #ce1126;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.mode-icon {
+  font-size: 18px;
+}
+
+.mode-label {
+  font-size: 11px;
+  font-weight: 500;
+}

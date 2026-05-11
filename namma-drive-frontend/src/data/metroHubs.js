@@ -1,0 +1,73 @@
+// ── Metro Hubs Data ───────────────────────────────────────────
+export const METRO_HUBS = [
+  {
+    id:      'bengaluru',
+    name:    'Bengaluru',
+    emoji:   '🏙️',
+    coords:  [12.9716, 77.5946],
+    zoom:    12,
+    tagline: 'Silicon Valley of India',
+    trending: [
+      { name: 'Nandi Hills',       coords: [13.3702, 77.6835], emoji: '⛰️', dist: '~60 km' },
+      { name: 'Mysuru',            coords: [12.2958, 76.6394], emoji: '🏰', dist: '~145 km' },
+      { name: 'Coorg',             coords: [12.3375, 75.8069], emoji: '🌿', dist: '~250 km' },
+      { name: 'Shivanasamudra',    coords: [12.2687, 77.1587], emoji: '💧', dist: '~130 km' },
+    ],
+  },
+  {
+    id:      'mysuru',
+    name:    'Mysuru',
+    emoji:   '🏰',
+    coords:  [12.2958, 76.6394],
+    zoom:    12,
+    tagline: 'City of Palaces',
+    trending: [
+      { name: 'Coorg',             coords: [12.3375, 75.8069], emoji: '🌿', dist: '~100 km' },
+      { name: 'Wayanad',           coords: [11.6854, 76.1320], emoji: '🌄', dist: '~110 km' },
+      { name: 'Ooty',              coords: [11.4102, 76.6950], emoji: '🚂', dist: '~130 km' },
+      { name: 'Nagarhole',         coords: [12.0800, 76.1400], emoji: '🐘', dist: '~95 km' },
+    ],
+  },
+  {
+    id:      'hubballi',
+    name:    'Hubballi',
+    emoji:   '🏭',
+    coords:  [15.3647, 75.1240],
+    zoom:    12,
+    tagline: 'Commercial Hub of North Karnataka',
+    trending: [
+      { name: 'Dharwad',           coords: [15.4589, 75.0078], emoji: '🎵', dist: '~20 km' },
+      { name: 'Badami',            coords: [15.9200, 75.6700], emoji: '🪨', dist: '~100 km' },
+      { name: 'Pattadakal',        coords: [15.9480, 75.8170], emoji: '🛕', dist: '~110 km' },
+      { name: 'Gokarna',           coords: [14.5479, 74.3188], emoji: '🏖️', dist: '~160 km' },
+    ],
+  },
+  {
+    id:      'mangaluru',
+    name:    'Mangaluru',
+    emoji:   '🌊',
+    coords:  [12.8628, 74.8455],
+    zoom:    12,
+    tagline: 'Gateway of Karnataka',
+    trending: [
+      { name: 'Udupi',             coords: [13.3409, 74.7421], emoji: '🛕', dist: '~60 km' },
+      { name: 'Murudeshwar',       coords: [14.0940, 74.4820], emoji: '🙏', dist: '~160 km' },
+      { name: 'Coorg',             coords: [12.3375, 75.8069], emoji: '🌿', dist: '~135 km' },
+      { name: 'Agumbe',            coords: [13.5033, 75.0959], emoji: '🌧️', dist: '~110 km' },
+    ],
+  },
+  {
+    id:      'belagavi',
+    name:    'Belagavi',
+    emoji:   '🏔️',
+    coords:  [15.8596, 75.6245],
+    zoom:    12,
+    tagline: 'Rani of Deccan',
+    trending: [
+      { name: 'Goa',               coords: [15.2993, 74.1240], emoji: '🏖️', dist: '~90 km' },
+      { name: 'Badami',            coords: [15.9200, 75.6700], emoji: '🪨', dist: '~150 km' },
+      { name: 'Kolhapur',          coords: [16.7050, 74.2433], emoji: '🛕', dist: '~70 km' },
+      { name: 'Jog Falls',         coords: [14.2270, 74.8050], emoji: '💧', dist: '~220 km' },
+    ],
+  },
+];
