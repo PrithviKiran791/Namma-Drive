@@ -1,0 +1,222 @@
+.history-page {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hst-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.hst-logo-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.hst-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #ce1126;
+  display: block;
+}
+
+.hst-logo {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111827;
+}
+
+.hst-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.hst-nav-link {
+  font-size: 13px;
+  color: #9ca3af;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.hst-nav-link:hover,
+.hst-nav-link.active {
+  color: #111827;
+  font-weight: 500;
+}
+
+.hst-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem 1.75rem;
+  max-width: 700px;
+  width: 100%;
+}
+
+/* Stats row */
+.hst-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 1.75rem;
+}
+
+.hst-stat-card {
+  background: #f9fafb;
+  border-radius: 8px;
+  padding: 1rem 1.1rem;
+}
+
+.hst-stat-label {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-bottom: 6px;
+}
+
+.hst-stat-val {
+  font-size: 24px;
+  font-weight: 500;
+  color: #111827;
+}
+
+/* Section label */
+.hst-section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+
+/* Empty / error states */
+.hst-empty {
+  font-size: 14px;
+  color: #9ca3af;
+  padding: 2rem 0;
+}
+
+.hst-loading {
+  font-size: 14px;
+  color: #9ca3af;
+  padding: 2rem 0;
+}
+
+.hst-error {
+  font-size: 13px;
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  padding: 10px 12px;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+/* Route cards */
+.hst-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 10px;
+  transition: background 0.15s;
+}
+
+.hst-card:hover {
+  background: #f9fafb;
+}
+
+.hst-card-icon {
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  background: #1a1040;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.hst-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.hst-card-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hst-card-meta {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+
+.hst-pill-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.hst-pill {
+  font-size: 11px;
+  color: #374151;
+  background: #f3f4f6;
+  border-radius: 20px;
+  padding: 3px 9px;
+}
+
+.hst-pill.fuel {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* Action buttons */
+.hst-actions {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.hst-btn {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  border: 1px solid transparent;
+}
+
+.hst-btn:hover {
+  opacity: 0.8;
+}
+
+.hst-btn.load {
+  background: #1a1040;
+  color: #ffffff;
+  border-color: #1a1040;
+}
+
+.hst-btn.del {
+  background: #ffffff;
+  color: #dc2626;
+  border-color: #fecaca;
+}
