@@ -103,7 +103,7 @@ const GeoSearch = forwardRef(function GeoSearch(
   return (
     <div className="geo-search" ref={wrapRef}>
       <div className={`geo-input-wrap ${open ? 'active' : ''}`}>
-        <span className="geo-icon">🔍</span>
+        <span className="geo-icon" style={{ fontWeight: 700, color: '#ce1126' }}>·</span>
         <input
           ref={inputRef}
           className="geo-input"
@@ -113,7 +113,7 @@ const GeoSearch = forwardRef(function GeoSearch(
           onFocus={() => results.length > 0 && setOpen(true)}
           autoComplete="off"
         />
-        {loading && <span className="geo-spinner">⏳</span>}
+        {loading && <span className="geo-spinner" style={{ fontSize: 10, fontWeight: 700 }}>...</span>}
         {query && !loading && (
           <button className="geo-clear" onClick={handleClear}>✕</button>
         )}
@@ -139,7 +139,7 @@ const GeoSearch = forwardRef(function GeoSearch(
                 handleSelect(item);
               }}
             >
-              <span className="geo-result-icon">📍</span>
+              <span className="geo-result-icon" style={{ color: '#ce1126', fontWeight: 700 }}>›</span>
               <div className="geo-result-text">
                 <span className="geo-result-name">{item.shortName}</span>
                 <span className="geo-result-full">{item.name}</span>

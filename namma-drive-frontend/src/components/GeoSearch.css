@@ -11,7 +11,21 @@
   border-radius: 10px;
   padding: 9px 12px;
   background: #f9fafb;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Premium Glass Hover Effect */
+.geo-input-wrap:hover:not(:focus-within) {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #d1d5db;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transform: translateY(-1px);
+}
+
+.dark-theme .geo-input-wrap:hover:not(:focus-within) {
+  background: rgba(31, 41, 55, 0.9);
+  border-color: #f9d616;
+  box-shadow: 0 4px 12px rgba(249, 214, 22, 0.15);
 }
 
 .geo-input-wrap.active,
@@ -19,6 +33,12 @@
   border-color: #ce1126;
   box-shadow: 0 0 0 3px rgba(206, 17, 38, 0.08);
   background: #fff;
+}
+
+.dark-theme .geo-input-wrap.active,
+.dark-theme .geo-input-wrap:focus-within {
+  background: #1f2937;
+  border-color: #ce1126;
 }
 
 .geo-icon {

@@ -4,7 +4,7 @@ import { weatherEmoji } from '../services/weather';
 import UserAuthBar from './UserAuthBar';
 import '../styles/History.css';
 
-const MODE_ICON = { car: '🚗', bike: '🚴', transit: '🚌' };
+const MODE_IMAGES = { car: '/car_icon.jpg', bike: '/cycle_icon.png', transit: '/bus_icon.png' };
 
 export default function History({ onLoadRoute, onNavigate, user }) {
   const [routes,  setRoutes]  = useState([]);
@@ -107,7 +107,11 @@ export default function History({ onLoadRoute, onNavigate, user }) {
         {routes.map(route => (
           <div key={route._id} className="hst-card">
             <div className="hst-card-icon">
-              {MODE_ICON[route.transportMode] || '🗺'}
+              <img 
+                src={MODE_IMAGES[route.transportMode] || '/car_icon.jpg'} 
+                alt={route.transportMode} 
+                style={{ width: 24, height: 24, objectFit: 'contain', borderRadius: 4 }} 
+              />
             </div>
 
             <div className="hst-card-info">
@@ -124,26 +128,35 @@ export default function History({ onLoadRoute, onNavigate, user }) {
               </p>
               <div className="hst-pill-row">
                 {route.distance && (
-                  <span className="hst-pill">📏 {route.distance}</span>
+                  <span className="hst-pill">Dist: {route.distance}</span>
                 )}
                 {route.duration && (
-                  <span className="hst-pill">⏱ {route.duration}</span>
+                  <span className="hst-pill">Time: {route.duration}</span>
                 )}
                 {route.fuelStopsOnRoute?.length > 0 && (
                   <span className="hst-pill fuel">
-                    ⛽ {route.fuelStopsOnRoute.length} fuel stops
+                    Fuel stops: {route.fuelStopsOnRoute.length}
                   </span>
                 )}
                 {route.transportMode && (
-                  <span className="hst-pill mode">
-                    {MODE_ICON[route.transportMode]} {route.transportMode}
+                  <span className="hst-pill mode" style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                    <img 
+                      src={MODE_IMAGES[route.transportMode] || '/car_icon.jpg'} 
+                      alt={route.transportMode} 
+                      style={{ width: 14, height: 14, objectFit: 'contain' }} 
+                    />
+                    {route.transportMode}
                   </span>
                 )}
               </div>
               {/* Weather snapshot at time of save */}
               {route.weatherAtSave && (
                 <div className="hst-weather-snap">
-                  <span>{weatherEmoji(route.weatherAtSave.main)}</span>
+                  <img 
+                    src={weatherEmoji(route.weatherAtSave.main)} 
+                    alt={route.weatherAtSave.main} 
+                    style={{ width: 16, height: 16, objectFit: 'contain' }} 
+                  />
                   <span className="hst-weather-temp">{route.weatherAtSave.temp}°C</span>
                   <span className="hst-weather-desc">{route.weatherAtSave.description}</span>
                   <span className="hst-weather-label">when saved</span>

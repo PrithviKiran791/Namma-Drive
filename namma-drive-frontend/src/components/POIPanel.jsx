@@ -3,7 +3,13 @@ import { poiAPI } from '../api';
 import { weatherEmoji } from '../services/weather';
 import './POIPanel.css';
 
-const CATEGORY_ICONS = { Trek: '🏔', Temple: '🛕', Picnic: '🌳', Hotel: '🏨' };
+const CATEGORY_IMAGES = { 
+  All: '/car_icon.jpg',
+  Trek: '/scenic.png', 
+  Temple: '/photo4jpg.jpg', 
+  Picnic: '/cycle_icon.png', 
+  Hotel: '/bangalore.jpg' 
+};
 
 export default function POIPanel({ onRouteToPOI }) {
   const [pois,     setPois]     = useState([]);
@@ -34,24 +40,35 @@ export default function POIPanel({ onRouteToPOI }) {
             key={cat}
             className={`cat-btn ${category === cat ? 'active' : ''}`}
             onClick={() => setCategory(cat)}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}
           >
-            {CATEGORY_ICONS[cat] ?? '🗺'} {cat}
+            <img 
+              src={CATEGORY_IMAGES[cat] || '/scenic.png'} 
+              alt={cat} 
+              style={{ width: 14, height: 14, objectFit: 'cover', borderRadius: '50%' }} 
+            />
+            {cat}
           </button>
         ))}
       </div>
 
       <div className="poi-list">
         {loading ? (
-          <div className="poi-loading">🌀 Finding spots...</div>
+          <div className="poi-loading">Finding spots...</div>
         ) : (
           pois.map(poi => (
             <div key={poi._id} className="poi-card">
               <div className="poi-info">
                 <div className="poi-header">
-                  <span className="poi-name">
-                    {CATEGORY_ICONS[poi.category] ?? '📍'} {poi.name}
+                  <span className="poi-name" style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+                    <img 
+                      src={CATEGORY_IMAGES[poi.category] || '/scenic.png'} 
+                      alt={poi.category} 
+                      style={{ width: 16, height: 16, objectFit: 'cover', borderRadius: '50%' }} 
+                    />
+                    {poi.name}
                   </span>
-                  <span className="poi-rating">⭐ {poi.rating}</span>
+                  <span className="poi-rating">★ {poi.rating}</span>
                 </div>
                 <p className="poi-desc">{poi.description}</p>
               </div>

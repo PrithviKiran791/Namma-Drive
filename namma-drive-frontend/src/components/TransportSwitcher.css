@@ -4,6 +4,7 @@
   padding: 4px;
   border-radius: 12px;
   margin-bottom: 1rem;
+  transition: background 0.3s ease;
 }
 
 .mode-btn {
@@ -17,21 +18,53 @@
   background: transparent;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   color: #6b7280;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Premium Glass Hover Effect */
+.mode-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #111827;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .mode-btn.active {
   background: #ffffff;
   color: #ce1126;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.mode-icon {
-  font-size: 18px;
+  font-weight: 600;
 }
 
 .mode-label {
   font-size: 11px;
   font-weight: 500;
+}
+
+/* Dark Theme Overrides */
+.dark-theme .transport-switcher {
+  background: #1f2937;
+}
+
+.dark-theme .mode-btn {
+  color: #9ca3af;
+}
+
+.dark-theme .mode-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #f9d616;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dark-theme .mode-btn.active {
+  background: #374151;
+  color: #f9d616;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }

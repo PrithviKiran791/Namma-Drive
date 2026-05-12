@@ -28,18 +28,15 @@ if (process.env.MONGODB_URI) {
 }
 const routeSchema = new mongoose.Schema({
   title: { type: String, default: 'Untitled Route' },
-  originCity: { type: String, default: '' },      // CO2: for analytics (e.g. "Most popular from Bengaluru")
-  origin: { name: String, coords: [Number] },
-  destination: { name: String, coords: [Number] },
+  originCity: { type: String, default: '' },
+  origin: { type: mongoose.Schema.Types.Mixed, default: {} },
+  destination: { type: mongoose.Schema.Types.Mixed, default: {} },
   distance: String,
   duration: String,
   transportMode: { type: String, default: 'car' },
-  geometry: [Array],
-  fuelStopsOnRoute: [{ name: String, coords: [Number], type: String, city: String, distanceFromRoute: Number }],
-  weatherAtSave: {
-    temp: Number, description: String, main: String,
-    icon: String, humidity: Number, wind: Number,
-  },
+  geometry: { type: mongoose.Schema.Types.Mixed, default: [] },
+  fuelStopsOnRoute: { type: mongoose.Schema.Types.Mixed, default: [] },
+  weatherAtSave: { type: mongoose.Schema.Types.Mixed, default: {} },
   timestamp: { type: Date, default: Date.now },
 });
 const RouteModel = mongoose.model('Route', routeSchema);
@@ -241,10 +238,8 @@ class MemoryRoute {
   static async create(obj) { const inst = new MemoryRoute(obj); MemoryRoute.store.push(inst); return inst; }
 }
 MemoryRoute.store = [];
-let Route = RouteModel;
-if (!process.env.MONGODB_URI || mongoose.connection.readyState !== 1) Route = MemoryRoute;
-let City = CityModel;
-if (!process.env.MONGODB_URI || mongoose.connection.readyState !== 1) City = MemoryCity;
+let Route = process.env.MONGODB_URI ? RouteModel : MemoryRoute;
+let City = process.env.MONGODB_URI ? CityModel : MemoryCity;
 
 const CITY_SEED = [
   { id: 'bengaluru', name: 'Bengaluru', center: [12.9716, 77.5946] },
@@ -347,9 +342,21 @@ app.get('/api/pois', async (req, res) => {
   try {
     const { category } = req.query;
     const filter = category ? { category } : {};
-    const pois = await POIModel.find(filter);
+    let pois = [];
+    if (process.env.MONGODB_URI && mongoose.connection.readyState === 1) {
+      pois = await POIModel.find(filter);
+    }
+    if (!pois || pois.length === 0) {
+      pois = category ? POI_DATA.filter(p => p.category === category) : POI_DATA;
+      pois = pois.map((p, idx) => ({ ...p, _id: p._id || `poi-${idx}` }));
+    }
     res.json({ success: true, count: pois.length, pois });
-  } catch (err) { res.status(500).json({ success: false, error: err.message }); }
+  } catch (err) { 
+    const { category } = req.query;
+    let fallback = category ? POI_DATA.filter(p => p.category === category) : POI_DATA;
+    fallback = fallback.map((p, idx) => ({ ...p, _id: p._id || `poi-${idx}` }));
+    res.json({ success: true, count: fallback.length, pois: fallback });
+  }
 });
 
 app.post('/api/pois/near-route', async (req, res) => {
@@ -444,10 +451,26 @@ app.post('/api/routes/save', async (req,res) => {
       route = await Route.create(routeData);
     }
     res.status(201).json({ success:true, route });
-  } catch (err) { res.status(500).json({ success:false, error:err.message }); }
+  } catch (err) { 
+    console.error('[Route Save Error]', err);
+    res.status(500).json({ success:false, error:err.message }); 
+  }
 });
 
-app.get('/api/routes/history', async (req,res) => { try { let routes = await Route.find(); if (!routes.sort) routes = routes.slice(); routes = routes.sort ? routes.sort((a,b)=>new Date(b.timestamp)-new Date(a.timestamp)).slice(0,50) : routes; res.json({ success:true, count:routes.length, routes }); } catch (err) { res.status(500).json({ success:false, error:err.message }); } });
+app.get('/api/routes/history', async (req,res) => { 
+  try { 
+    let routes;
+    if (Route === RouteModel) {
+      routes = await Route.find().sort({ timestamp: -1 }).limit(50);
+    } else {
+      routes = await Route.find(); 
+      routes = routes.slice().sort((a,b)=>new Date(b.timestamp)-new Date(a.timestamp)).slice(0,50);
+    }
+    res.json({ success:true, count:routes.length, routes }); 
+  } catch (err) { 
+    res.status(500).json({ success:false, error:err.message }); 
+  } 
+});
 app.get('/api/routes/:id', async (req,res) => { try { const route = await Route.findById(req.params.id); if (!route) return res.status(404).json({ success:false, message:'Route not found' }); res.json({ success:true, route }); } catch (err) { res.status(500).json({ success:false, error:err.message }); } });
 app.delete('/api/routes/:id', async (req,res) => { try { const route = await Route.findByIdAndDelete(req.params.id); if (!route) return res.status(404).json({ success:false, message:'Route not found' }); res.json({ success:true, message:'Route deleted' }); } catch (err) { res.status(500).json({ success:false, error:err.message }); } });
 
