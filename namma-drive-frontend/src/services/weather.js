@@ -151,23 +151,23 @@ export function isWeatherUnsafe(weather, category) {
   return false;
 }
 
-// ── WMO main condition → themed emoji ──
+// ── WMO main condition → image path ──
 export function weatherEmoji(main) {
   const map = {
-    Clear:        '☀️',
-    Clouds:       '⛅',
-    Rain:         '🌧️',
-    Drizzle:      '🌦️',
-    Thunderstorm: '⛈️',
-    Snow:         '❄️',
-    Fog:          '🌫️',
+    Clear:        '/scenic.png',
+    Clouds:       '/scenic.png',
+    Rain:         '/photo4jpg.jpg',
+    Drizzle:      '/photo4jpg.jpg',
+    Thunderstorm: '/halasi-belgaum-karnataka-city-hero.jpg',
+    Snow:         '/istockphoto-1382384282-612x612.jpg',
+    Fog:          '/istockphoto-1004667282-612x612.jpg',
   };
-  return map[main] ?? '🌡️';
+  return map[main] ?? '/scenic.png';
 }
 
 // ── Friendly alert message ──
 export function getAlertMessage(weather, locationName, category) {
   const { description } = weather;
   const cond = description.charAt(0).toUpperCase() + description.slice(1);
-  return `⚠️ ${cond} at ${locationName} — unfavorable for ${category.toLowerCase()} today. Proceed with caution.`;
+  return `Alert: ${cond} at ${locationName} — unfavorable for ${category.toLowerCase()} today. Proceed with caution.`;
 }

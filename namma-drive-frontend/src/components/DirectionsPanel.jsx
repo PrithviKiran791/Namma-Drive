@@ -184,7 +184,7 @@ export default function DirectionsPanel({
                 onClick={() => setMuted(m => !m)}
                 title={muted ? 'Unmute voice' : 'Mute voice'}
               >
-                {muted ? '🔇 Muted' : '🔊 Voice'}
+                {muted ? 'Voice Off' : 'Voice On'}
               </button>
 
               <button
@@ -197,7 +197,7 @@ export default function DirectionsPanel({
                 }}
                 title={canSpeak ? 'Read the current step aloud' : 'Speech not supported'}
               >
-                🗣 Read aloud
+                Read Aloud
               </button>
             </div>
           </div>

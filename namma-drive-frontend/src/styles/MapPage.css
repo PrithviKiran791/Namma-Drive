@@ -19,16 +19,19 @@
 }
 
 .mp-sidebar-header {
-  padding: 1.25rem;
+  padding: 1rem 1.25rem;
   border-bottom: 1px solid #f3f4f6;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .mp-logo-row {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 1rem;
+  margin: 0;
 }
 
 .mp-logo-dot {
@@ -472,4 +475,136 @@
   .mp-map-where {
     min-width: auto;
   }
+}
+
+/* ── Dark Theme Overrides ── */
+.dark-theme .mp-sidebar {
+  background: #111827;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+.dark-theme .mp-sidebar-header,
+.dark-theme .mp-section,
+.dark-theme .mp-fuel-item {
+  border-color: #1f2937;
+}
+
+.dark-theme .mp-logo-text {
+  color: #f9fafb;
+}
+
+.dark-theme .mp-field {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark-theme .mp-field select {
+  color: #f9fafb;
+}
+
+.dark-theme .mp-field select option {
+  background: #1f2937;
+  color: #f9fafb;
+}
+
+.dark-theme .mp-route-card {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+.dark-theme .mp-stat-pill {
+  background: #111827;
+  color: #e5e7eb;
+  border-color: #374151;
+}
+
+.dark-theme .mp-name-input {
+  background: #111827;
+  color: #f9fafb;
+  border-color: #374151;
+}
+
+.dark-theme .mp-bottom-nav {
+  border-color: #374151;
+  background: #111827;
+}
+
+.dark-theme .mp-nav-btn {
+  background: #111827;
+  color: #9ca3af;
+  border-color: #374151;
+}
+
+.dark-theme .mp-nav-btn:hover:not(.active) {
+  background: #1f2937;
+  color: #f9fafb;
+}
+
+.dark-theme .mp-nav-btn.active {
+  background: #374151;
+  color: #f9d616;
+}
+
+.dark-theme .mp-fuel-name {
+  color: #f9fafb;
+}
+
+.dark-theme .mp-map-card {
+  background: rgba(17, 24, 39, 0.92);
+  border-color: rgba(55, 65, 81, 0.9);
+  color: #f9fafb;
+}
+
+.dark-theme .metro-card {
+  background: #1f2937;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+.dark-theme .metro-card:hover {
+  background: #374151;
+  color: #f9d616;
+  border-color: #f9d616;
+}
+
+.dark-theme .poi-card {
+  background: #1f2937;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+.dark-theme .poi-name {
+  color: #f9fafb;
+}
+
+.dark-theme .cat-btn {
+  background: #1f2937;
+  border-color: #374151;
+  color: #e5e7eb;
+}
+
+.dark-theme .cat-btn.active {
+  background: #ce1126;
+  color: #ffffff;
+}
+
+.dark-theme .weather-card {
+  background: #1f2937;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+.dark-theme .wc-name {
+  color: #f9fafb;
+}
+
+.dark-theme .tr-item {
+  background: #1f2937;
+  border-color: #374151;
+  color: #f9fafb;
+}
+
+.dark-theme .tr-name {
+  color: #f9fafb;
 }

@@ -1,17 +1,15 @@
 import { Suspense, lazy } from 'react';
 import { SignInButton, useUser } from '@clerk/clerk-react';
+import { AuroraBackground } from './ui/aurora-background';
 import '../styles/LandingPage.css';
 
 const GlobeScene = lazy(() => import('./GlobeScene'));
-
-// Placeholder image URL - replace with actual image path once added
-const karnatakaMapImg = 'data:image/svg+xml,%3Csvg width="600" height="800" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="600" height="800" fill="%231a1a1a"/%3E%3Ctext x="50%25" y="50%25" font-family="Arial" font-size="24" fill="%23f9d616" text-anchor="middle" dominant-baseline="middle"%3EKarnataka Map%3C/text%3E%3C/svg%3E';
 
 export default function LandingPage({ onNavigate }) {
   const { isSignedIn } = useUser();
 
   return (
-    <div className="landing">
+    <AuroraBackground className="landing">
 
       {/* Three.js background globe */}
       <div className="landing-canvas">
@@ -76,11 +74,11 @@ export default function LandingPage({ onNavigate }) {
           </div>
         </div>
 
-        {/* Right side - Karnataka Map */}
+        {/* Right side - Karnataka Map Image */}
         <div className="landing-map">
           <img 
-            src={karnatakaMapImg} 
-            alt="Karnataka Map with cities and regions" 
+            src="/Karnataka-map.jpeg.jpeg" 
+            alt="Karnataka - The Land of Heritage, Innovation and Opportunity" 
             className="karnataka-map-image"
           />
         </div>
@@ -88,6 +86,6 @@ export default function LandingPage({ onNavigate }) {
 
       {/* Karnataka flag colour accent bar */}
       <div className="landing-bottom-bar" />
-    </div>
+    </AuroraBackground>
   );
 }

@@ -27,14 +27,18 @@ export default function WeatherCard({ coords, name, category, onRoute, compact =
     // Compact inline pill shown in sidebar
     return (
       <div className={`weather-pill ${unsafe ? 'warn' : ''}`}>
-        {loading && <span className="wp-loading">🌡️ Loading...</span>}
+        {loading && <span className="wp-loading">Loading...</span>}
         {error   && <span className="wp-error">Weather unavailable</span>}
         {weather && !loading && (
           <>
-            <span className="wp-emoji">{weatherEmoji(weather.main)}</span>
+            <img 
+              src={weatherEmoji(weather.main)} 
+              alt={weather.main} 
+              style={{ width: 18, height: 18, objectFit: 'contain' }} 
+            />
             <span className="wp-temp">{weather.temp}°C</span>
             <span className="wp-desc">{weather.description}</span>
-            {unsafe && <span className="wp-warn-tag">⚠️ Alert</span>}
+            {unsafe && <span className="wp-warn-tag">Alert</span>}
           </>
         )}
       </div>
@@ -55,26 +59,30 @@ export default function WeatherCard({ coords, name, category, onRoute, compact =
       {/* Loading */}
       {loading && (
         <div className="wc-loading">
-          <span className="wc-spin">🌀</span> Fetching live weather...
+          Fetching live weather...
         </div>
       )}
 
       {/* Error */}
       {error && !loading && (
-        <div className="wc-error">⚡ Could not fetch weather data</div>
+        <div className="wc-error">Could not fetch weather data</div>
       )}
 
       {/* Weather data */}
       {weather && !loading && (
         <>
           <div className="wc-body">
-            <span className="wc-emoji">{weatherEmoji(weather.main)}</span>
+            <img 
+              src={weatherEmoji(weather.main)} 
+              alt={weather.main} 
+              style={{ width: 36, height: 36, objectFit: 'contain' }} 
+            />
             <div className="wc-info">
               <span className="wc-temp">{weather.temp}°C</span>
               <span className="wc-desc">{weather.description}</span>
               <div className="wc-details">
-                <span title="Humidity">💧 {weather.humidity}%</span>
-                <span title="Wind speed">💨 {weather.wind} km/h</span>
+                <span title="Humidity">Hum: {weather.humidity}%</span>
+                <span title="Wind speed">Wind: {weather.wind} km/h</span>
               </div>
             </div>
           </div>
@@ -82,7 +90,7 @@ export default function WeatherCard({ coords, name, category, onRoute, compact =
           {/* Safety alert banner */}
           {unsafe && (
             <div className="wc-alert">
-              <strong>⚠️ Weather Alert</strong>
+              <strong>Weather Alert</strong>
               <p>
                 <em>{weather.description}</em> at <strong>{name}</strong> is
                 unfavorable for {category?.toLowerCase()} today. Consider
@@ -99,7 +107,7 @@ export default function WeatherCard({ coords, name, category, onRoute, compact =
           className={`wc-route-btn ${unsafe ? 'warn' : ''}`}
           onClick={onRoute}
         >
-          {unsafe ? '⚠️ Route Anyway' : '🚗 Start Drive'}
+          {unsafe ? 'Route Anyway' : 'Start Drive'}
         </button>
       )}
     </div>
