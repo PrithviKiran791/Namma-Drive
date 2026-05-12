@@ -1,172 +1,385 @@
+/* ── Root container: must fill the entire viewport ── */
 .landing {
   position: relative;
   width: 100%;
   height: 100%;
-  background: #1a1040;
+  min-height: 100vh;
+  background: #0f0305;
   overflow: hidden;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+/* ── Ambient glow layers ── */
+.landing::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 60%;
+  height: 70%;
+  background: radial-gradient(ellipse, rgba(206, 17, 38, 0.28) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.landing::after {
+  content: '';
+  position: absolute;
+  bottom: -10%;
+  right: -5%;
+  width: 55%;
+  height: 65%;
+  background: radial-gradient(ellipse, rgba(249, 214, 22, 0.18) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Three.js canvas: absolute behind everything ── */
 .landing-canvas {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
   z-index: 1;
 }
 
+/* ── Globe loading fallback ── */
+.globe-fallback {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(206, 17, 38, 0.2) 0%,
+    transparent 70%
+  );
+}
+
+/* ── Top navigation ── */
 .landing-nav {
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.2rem 2rem;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 1.25rem 2.5rem;
+  border-bottom: 1px solid rgba(249, 214, 22, 0.1);
   z-index: 10;
+  background: rgba(15, 3, 5, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .landing-logo {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 15px;
-  font-weight: 500;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
   color: #fff;
+  letter-spacing: 0.02em;
 }
 
 .logo-dot {
-  width: 8px; height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: #ce1126;
+  background: #f9d616;
   display: block;
+  box-shadow: 0 0 8px rgba(249, 214, 22, 0.8);
 }
 
 .nav-links {
   display: flex;
-  gap: 24px;
+  gap: 28px;
   font-size: 13px;
-  color: rgba(255,255,255,0.5);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .nav-links span {
   cursor: pointer;
   transition: color 0.2s;
+  font-weight: 500;
 }
 
 .nav-links span:hover {
-  color: rgba(255,255,255,0.9);
+  color: #f9d616;
+}
+
+/* ── Hero content block — sits above the canvas ── */
+.landing-hero {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  padding: 0 3rem;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 .landing-content {
-  position: relative;
-  z-index: 10;
-  text-align: center;
+  flex: 0 0 auto;
+  text-align: left;
   color: white;
-  padding: 0 1rem;
+  max-width: 480px;
 }
 
+/* ── Karnataka Map Image ── */
+.landing-map {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.karnataka-map-image {
+  width: 100%;
+  height: auto;
+  max-width: 500px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 30px rgba(249, 214, 22, 0.2));
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* ── Status badge ── */
 .landing-badge {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.12);
+  gap: 8px;
+  background: rgba(249, 214, 22, 0.08);
+  border: 1px solid rgba(249, 214, 22, 0.25);
   border-radius: 20px;
-  padding: 5px 14px;
+  padding: 6px 16px;
   font-size: 12px;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: rgba(249, 214, 22, 0.85);
+  margin-bottom: 1.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .badge-dot {
-  width: 6px; height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #4ade80;
   display: block;
+  box-shadow: 0 0 6px rgba(74, 222, 128, 0.8);
 }
 
+/* ── Headline ── */
 .landing-content h1 {
-  font-size: 52px;
-  font-weight: 500;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.02em;
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .landing-content h1 span {
-  color: #ce1126;
+  color: #f9d616;
+  text-shadow: 0 0 30px rgba(249, 214, 22, 0.4);
 }
 
+/* ── Subheadline ── */
 .landing-content p {
-  font-size: 16px;
-  color: rgba(255,255,255,0.45);
-  max-width: 380px;
-  margin: 0 auto 2.5rem;
-  line-height: 1.7;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 420px;
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
 }
 
+/* ── CTA buttons ── */
 .landing-cta {
   display: flex;
   gap: 12px;
-  justify-content: center;
-  margin-bottom: 3.5rem;
+  justify-content: flex-start;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
 }
 
 .btn-start {
-  background: #ce1126;
+  background: linear-gradient(135deg, #ce1126 0%, #a00d1f 100%);
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 13px 30px;
+  border-radius: 10px;
+  padding: 13px 32px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(206, 17, 38, 0.35);
 }
 
 .btn-start:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(206,17,38,0.45);
+  box-shadow: 0 8px 24px rgba(206, 17, 38, 0.45);
 }
 
 .btn-ghost {
   background: transparent;
-  color: rgba(255,255,255,0.55);
-  border: 1px solid rgba(255,255,255,0.15);
-  border-radius: 8px;
-  padding: 13px 26px;
+  color: rgba(255, 255, 255, 0.7);
+  border: 1.5px solid rgba(249, 214, 22, 0.3);
+  border-radius: 10px;
+  padding: 13px 28px;
   font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: border-color 0.2s, color 0.2s;
+  transition: all 0.2s;
 }
 
 .btn-ghost:hover {
-  color: rgba(255,255,255,0.85);
-  border-color: rgba(255,255,255,0.35);
+  color: #f9d616;
+  border-color: rgba(249, 214, 22, 0.6);
+  background: rgba(249, 214, 22, 0.05);
 }
 
+/* ── Stats row ── */
 .landing-stats {
   display: flex;
-  gap: 3.5rem;
-  justify-content: center;
+  gap: 0;
+  justify-content: flex-start;
+  border: 1px solid rgba(249, 214, 22, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(8px);
+  overflow: hidden;
+  max-width: 380px;
 }
 
 .landing-stats div {
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  padding: 0.9rem 0.8rem;
+  border-right: 1px solid rgba(249, 214, 22, 0.12);
+}
+
+.landing-stats div:last-child {
+  border-right: none;
 }
 
 .landing-stats strong {
-  font-size: 24px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.85);
+  font-size: 20px;
+  font-weight: 700;
+  color: #f9d616;
+  line-height: 1;
 }
 
 .landing-stats span {
-  font-size: 11px;
-  color: rgba(255,255,255,0.3);
-  letter-spacing: 0.03em;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.45);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ── Bottom decorative line ── */
+.landing-bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #ce1126 20%,
+    #f9d616 50%,
+    #ce1126 80%,
+    transparent 100%
+  );
+  z-index: 10;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1200px) {
+  .landing-hero {
+    gap: 2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .landing-hero {
+    padding: 0 2rem;
+  }
+  
+  .karnataka-map-image {
+    max-width: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+  .landing-nav {
+    padding: 1rem 1.25rem;
+  }
+
+  .nav-links {
+    gap: 16px;
+    font-size: 12px;
+  }
+
+  .landing-hero {
+    flex-direction: column;
+    padding: 0 1.5rem;
+    gap: 2rem;
+  }
+
+  .landing-content {
+    text-align: center;
+    max-width: 100%;
+  }
+
+  .landing-cta {
+    justify-content: center;
+  }
+
+  .landing-stats {
+    margin: 0 auto;
+  }
+
+  .landing-map {
+    order: -1;
+  }
+
+  .karnataka-map-image {
+    max-width: 380px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-links span:not(:last-child) {
+    display: none;
+  }
+  
+  .landing-hero {
+    padding: 0 1rem;
+  }
+  
+  .karnataka-map-image {
+    max-width: 300px;
+  }
+  
+  .landing-stats {
+    max-width: 320px;
+  }
 }

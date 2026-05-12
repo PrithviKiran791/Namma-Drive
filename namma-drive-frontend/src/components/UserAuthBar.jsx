@@ -1,27 +1,30 @@
-import { Show, UserButton, useAuth } from '@clerk/react';
+import { SignInButton, UserButton, useUser } from '@clerk/clerk-react';
 import './UserAuthBar.css';
 
 export default function UserAuthBar({ onNavigate }) {
-  const { isLoaded } = useAuth();
-
-  if (!isLoaded) {
-    return <div className="uab-skeleton" aria-hidden />;
-  }
+  const { isSignedIn } = useUser();
 
   return (
     <div className="uab-wrap">
-      <Show when="signed-out">
-        <button type="button" className="uab-login" onClick={() => onNavigate('login')}>
-          Log in
-        </button>
-      </Show>
-      <Show when="signed-in">
-        <UserButton
-          appearance={{
-            elements: { avatarBox: 'uab-avatar' },
-          }}
-        />
-      </Show>
+      {!isSignedIn ? (
+        <SignInButton mode="modal">
+          <button type="button" className="uab-login">
+            Log in
+          </button>
+        </SignInButton>
+      ) : (
+        <div className="uab-user-menu">
+          <UserButton 
+            afterSignOutUrl="/"
+            appearance={{
+              elements: {
+                avatarBox: "w-10 h-10",
+                userButtonPopoverCard: "shadow-xl",
+              }
+            }}
+          />
+        </div>
+      )}
     </div>
   );
 }

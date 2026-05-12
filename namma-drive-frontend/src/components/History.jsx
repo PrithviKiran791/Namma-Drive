@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import { routeAPI } from '../api';
 import { weatherEmoji } from '../services/weather';
+import UserAuthBar from './UserAuthBar';
 import '../styles/History.css';
 
 const MODE_ICON = { car: '🚗', bike: '🚴', transit: '🚌' };
 
-export default function History({ onLoadRoute, onNavigate }) {
+export default function History({ onLoadRoute, onNavigate, user }) {
   const [routes,  setRoutes]  = useState([]);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState('');
@@ -52,10 +53,13 @@ export default function History({ onLoadRoute, onNavigate }) {
           <span className="hst-dot" />
           <span className="hst-logo">Namma Drive</span>
         </div>
-        <div className="hst-nav">
-          <span className="hst-nav-link" onClick={() => onNavigate('map')}>Map</span>
-          <span className="hst-nav-link active">History</span>
-          <span className="hst-nav-link" onClick={() => onNavigate('landing')}>Home</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div className="hst-nav">
+            <span className="hst-nav-link" onClick={() => onNavigate('map')}>Map</span>
+            <span className="hst-nav-link active">History</span>
+            <span className="hst-nav-link" onClick={() => onNavigate('landing')}>Home</span>
+          </div>
+          <UserAuthBar user={user} onNavigate={onNavigate} />
         </div>
       </div>
 

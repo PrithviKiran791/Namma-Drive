@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate Favicon PNGs</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h1 { color: #CE1126; }
+        canvas { border: 2px solid #ddd; margin: 10px; }
+        button { background: #F9D616; border: none; padding: 12px 24px; font-size: 16px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #e5c214; }
+        .preview { display: flex; gap: 20px; flex-wrap: wrap; margin: 20px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🗺️ Namma Drive Favicon Generator</h1>
+        <p>This page will generate PNG favicons from the SVG. Click the buttons below to download each size.</p>
+        
+        <div class="preview">
+            <div>
+                <h3>16x16 (Browser Tab)</h3>
+                <canvas id="canvas16" width="16" height="16"></canvas>
+                <br><button onclick="download(16)">Download 16x16</button>
+            </div>
+            <div>
+                <h3>32x32 (Browser Tab HD)</h3>
+                <canvas id="canvas32" width="32" height="32"></canvas>
+                <br><button onclick="download(32)">Download 32x32</button>
+            </div>
+            <div>
+                <h3>180x180 (Apple Touch Icon)</h3>
+                <canvas id="canvas180" width="180" height="180"></canvas>
+                <br><button onclick="download(180)">Download 180x180</button>
+            </div>
+        </div>
+
+        <h3>Instructions:</h3>
+        <ol>
+            <li>Click each download button above</li>
+            <li>Save the files as:
+                <ul>
+                    <li><code>favicon-16x16.png</code></li>
+                    <li><code>favicon-32x32.png</code></li>
+                    <li><code>apple-touch-icon.png</code></li>
+                </ul>
+            </li>
+            <li>Move them to the <code>/public</code> folder</li>
+            <li>Restart your dev server</li>
+        </ol>
+    </div>
+
+    <script>
+        // Load and draw the SVG
+        async function loadSVG() {
+            const response = await fetch('/favicon.svg');
+            const svgText = await response.text();
+            const img = new Image();
+            const blob = new Blob([svgText], { type: 'image/svg+xml' });
+            const url = URL.createObjectURL(blob);
+            
+            img.onload = function() {
+                drawCanvas(16, img);
+                drawCanvas(32, img);
+                drawCanvas(180, img);
+                URL.revokeObjectURL(url);
+            };
+            img.src = url;
+        }
+
+        function drawCanvas(size, img) {
+            const canvas = document.getElementById('canvas' + size);
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, size, size);
+        }
+
+        function download(size) {
+            const canvas = document.getElementById('canvas' + size);
+            const link = document.createElement('a');
+            
+            if (size === 180) {
+                link.download = 'apple-touch-icon.png';
+            } else {
+                link.download = `favicon-${size}x${size}.png`;
+            }
+            
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Load SVG when page loads
+        loadSVG();
+    </script>
+</body>
+</html>

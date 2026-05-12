@@ -3,14 +3,14 @@ import { poiAPI } from '../api';
 import { weatherEmoji } from '../services/weather';
 import './POIPanel.css';
 
-const CATEGORY_ICONS = { Trek: '🏔', Temple: '🛕', Picnic: '🌳' };
+const CATEGORY_ICONS = { Trek: '🏔', Temple: '🛕', Picnic: '🌳', Hotel: '🏨' };
 
 export default function POIPanel({ onRouteToPOI }) {
   const [pois,     setPois]     = useState([]);
   const [category, setCategory] = useState('All');
   const [loading,  setLoading]  = useState(false);
 
-  const categories = ['All', 'Trek', 'Temple', 'Picnic'];
+  const categories = ['All', 'Hotel', 'Trek', 'Temple', 'Picnic'];
 
   useEffect(() => { fetchPOIs(); }, [category]);
 

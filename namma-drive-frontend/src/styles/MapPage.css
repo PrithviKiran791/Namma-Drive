@@ -344,6 +344,44 @@
   max-width: 560px;
 }
 
+.mp-follow-btn {
+  border: 1px solid rgba(145, 17, 17, 0.18);
+  background: linear-gradient(135deg, #ffffff, #fff7f7);
+  color: #911111;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.mp-follow-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+.mp-follow-btn.active {
+  background: linear-gradient(135deg, #ce1126, #911111);
+  color: #ffffff;
+  border-color: #ce1126;
+}
+
+.user-arrow-icon {
+  background: transparent;
+  border: none;
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  border-radius: 14px;
+}
+
+.leaflet-container {
+  font-family: inherit;
+}
+
 .mp-map-where {
   min-width: min(420px, calc(100vw - 28px));
 }

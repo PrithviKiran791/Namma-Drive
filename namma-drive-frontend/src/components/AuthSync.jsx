@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useUser } from '@clerk/react';
+import { useUser } from '@clerk/clerk-react';
 import { userAPI } from '../api';
 
 export default function AuthSync() {
@@ -16,7 +16,7 @@ export default function AuthSync() {
             imageUrl: user.imageUrl,
           });
         } catch (err) {
-          console.error('Failed to sync user with MongoDB:', err);
+          console.error('Failed to sync user with backend:', err);
         }
       };
       syncUser();

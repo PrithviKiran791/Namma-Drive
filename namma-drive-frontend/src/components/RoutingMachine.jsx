@@ -7,6 +7,7 @@ import 'leaflet-routing-machine/dist/leaflet-routing-machine.css';
 function modeToOsrmProfile(mode) {
   if (mode === 'bike') return 'bike';
   if (mode === 'transit') return 'foot';
+  if (mode === 'scenic') return 'car';
   return 'car';
 }
 
@@ -16,16 +17,19 @@ export default function RoutingMachine({
   mode = 'car',
   routeKey,
   onRouteFound,
+  onRouteError,
 }) {
   const map = useMap();
   const originRef = useRef(origin);
   const destRef = useRef(destination);
   const onRouteFoundRef = useRef(onRouteFound);
+  const onRouteErrorRef = useRef(onRouteError);
 
   useLayoutEffect(() => {
     originRef.current = origin;
     destRef.current = destination;
     onRouteFoundRef.current = onRouteFound;
+    onRouteErrorRef.current = onRouteError;
   });
 
   const router = useMemo(() => {
@@ -71,10 +75,14 @@ export default function RoutingMachine({
     };
 
     control.on('routesfound', handleRoutesFound);
+    control.on('routingerror', () => {
+      onRouteErrorRef.current?.('Could not find a route. Try a different destination or transport mode.');
+    });
     control.route();
 
     return () => {
       control.off('routesfound', handleRoutesFound);
+      control.off('routingerror');
       map.removeControl(control);
     };
   }, [map, router, routeKey]);

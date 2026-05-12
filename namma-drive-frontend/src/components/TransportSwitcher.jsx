@@ -5,7 +5,8 @@ export default function TransportSwitcher({ mode, onChange }) {
   const modes = [
     { id: 'car', label: 'Car', icon: '🚗' },
     { id: 'bike', label: 'Bike', icon: '🚴' },
-    { id: 'transit', label: 'Transit', icon: '🚌' }
+    { id: 'transit', label: 'Transit', icon: '🚌' },
+    { id: 'scenic', label: 'Scenic', icon: '🌿' }
   ];
 
   return (
