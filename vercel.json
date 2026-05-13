@@ -1,5 +1,15 @@
 {
   "version": 2,
   "buildCommand": "cd namma-drive-frontend && npm run build",
-  "outputDirectory": "namma-drive-frontend/dist"
+  "outputDirectory": "namma-drive-frontend/dist",
+  "routes": [
+    {
+      "src": "^/(?!api/)",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/server.js"
+    }
+  ]
 }
