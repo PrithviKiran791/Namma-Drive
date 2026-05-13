@@ -21,11 +21,27 @@ app.use((req, res, next) => {
 });
 
 app.use(express.json());
-if (process.env.MONGODB_URI) {
-  mongoose.connect(process.env.MONGODB_URI)
-    .then(() => console.log('✓ MongoDB connected'))
-    .catch(err => console.error('✗ MongoDB connection failed:', err.message));
+// Use a cached connection for serverless environments to avoid reconnecting
+async function connectDB() {
+  if (!process.env.MONGODB_URI) return;
+  if (global.__mongooseConnected) return;
+  try {
+    // eslint-disable-next-line no-await-in-loop
+    await mongoose.connect(process.env.MONGODB_URI);
+    // Mark connected so subsequent invocations reuse the connection
+    // eslint-disable-next-line no-underscore-dangle
+    global.__mongooseConnected = true;
+    // Log only when actually connected
+    /* eslint-disable no-console */
+    console.log('✓ MongoDB connected');
+    /* eslint-enable no-console */
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('✗ MongoDB connection failed:', err.message);
+  }
 }
+
+connectDB();
 const routeSchema = new mongoose.Schema({
   title: { type: String, default: 'Untitled Route' },
   originCity: { type: String, default: '' },
@@ -543,5 +559,12 @@ app.get('/api/auth/me', authMiddleware, async (req, res) => {
     res.status(500).json({ success: false, message: err.message });
   }
 });
-app.listen(PORT, () => console.log(`Namma Drive server running on http://localhost:${PORT}`));
+if (require.main === module) {
+  /* eslint-disable no-console */
+  app.listen(PORT, () => console.log(`Namma Drive server running on http://localhost:${PORT}`));
+  /* eslint-enable no-console */
+}
+
+// Export the Express app so it can be wrapped by serverless handlers (Vercel)
+module.exports = app;
 

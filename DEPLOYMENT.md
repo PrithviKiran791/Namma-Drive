@@ -55,25 +55,4 @@ If you prefer not to use Vercel serverless functions for the Express API (recomm
 
 If you want, I can:
 - Run `vercel dev` locally and report any login prompts/errors.
-- Create a small GitHub Actions workflow to automatically deploy on push to `main`.
-
-## GitHub Actions (auto-deploy on push)
-
-You can automatically deploy to Vercel when pushing to `main` using the included GitHub Actions workflow: `.github/workflows/vercel-deploy.yml`.
-
-Required GitHub secrets (Repository Settings → Secrets → Actions):
-- `VERCEL_TOKEN` — a Vercel personal token (set to `Read & Deploy` scope)
-- `VERCEL_ORG_ID` — your Vercel Organization ID
-- `VERCEL_PROJECT_ID` — the Vercel Project ID
-
-Once those are configured, pushing to `main` will trigger the workflow which runs the Vercel CLI and deploys the monorepo configured by `vercel.json`.
-
-Example: create secrets via GitHub UI and push a commit to `main`:
-
-```bash
-git add .
-git commit -m "chore(ci): add vercel deploy workflow"
-git push origin main
-```
-
-If you'd like, I can also create a GitHub Action that only deploys the frontend (namma-drive-frontend) and leaves the backend to a separate host (Render/Railway). Tell me which flavor you prefer.
+- Add a tiny health-check endpoint or deployment smoke test for Vercel.
