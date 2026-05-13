@@ -1,13 +1,5 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "namma-drive-frontend/package.json", "use": "@vercel/static-build", "config": { "distDir": "dist" } },
-    { "src": "api/server.js", "use": "@vercel/node" }
-  ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/server.js" },
-    { "src": "/assets/(.*)", "dest": "/namma-drive-frontend/assets/$1" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
-  ]
+  "buildCommand": "cd namma-drive-frontend && npm run build",
+  "outputDirectory": "namma-drive-frontend/dist"
 }
